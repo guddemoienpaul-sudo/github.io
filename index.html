@@ -1,9 +1,33 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
+<head>
+    <title>Fox Hunt Secret Entry</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 50px; }
+        input { padding: 10px; font-size: 16px; border: 2px solid #333; border-radius: 5px; }
+        button { padding: 10px 20px; font-size: 16px; background: #ff6600; color: white; border: none; cursor: pointer; border-radius: 5px; }
+    </style>
+</head>
 <body>
+    <h1>🦊 Found a name?</h1>
+    <p>Enter the secret word to see your next map:</p>
+    
+    <input type="text" id="foxName" placeholder="Type name here...">
+    <button onclick="checkName()">Enter</button>
 
-<h1>My First Heading</h1>
-<p>My first paragraph.</p>
-
+    <script>
+        function checkName() {
+            var name = document.getElementById("foxName").value.toLowerCase().trim();
+            
+            if (name === "redfox") {
+                window.location.href = "map_red.jpg"; // Link to an image in your folder
+            } else if (name === "silverfox") {
+                window.location.href = "https://goo.gl/maps/xyz123"; // Link to a Google Map
+            } else {
+                alert("That's not the right name! Keep looking!");
+            }
+        }
+    </script>
 </body>
-</html> 
+</html>
