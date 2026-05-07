@@ -1,31 +1,95 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
     <title>Fox Hunt Secret Entry</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body { font-family: sans-serif; text-align: center; padding: 50px; }
-        input { padding: 10px; font-size: 16px; border: 2px solid #333; border-radius: 5px; }
-        button { padding: 10px 20px; font-size: 16px; background: #ff6600; color: white; border: none; cursor: pointer; border-radius: 5px; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* Hintergrundbild: Ersetze 'background.jpg' durch dein Bild */
+            background: url('bg.jpg') no-repeat center center fixed; 
+            background-size: cover;
+        }
+
+        /* Ein halbtransparenter Kasten, damit man den Text gut lesen kann */
+        .glass-container {
+            background: rgba(255, 255, 255, 0.9); /* Weiß mit 90% Deckkraft */
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            max-width: 90%;
+            width: 350px;
+            text-align: center;
+        }
+
+        .header-image {
+            width: 100%;
+            max-width: 250px; /* Begrenzt die Größe auf dem Handy */
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        h1 { color: #333; font-size: 1.5rem; }
+        p { color: #666; margin-bottom: 20px; }
+
+        input { 
+            padding: 12px; 
+            font-size: 16px; 
+            border: 2px solid #ddd; 
+            border-radius: 8px; 
+            width: 100%; 
+            box-sizing: border-box; /* Wichtig, damit Padding das Feld nicht sprengt */
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        input:focus { border-color: #ff6600; }
+
+        button { 
+            padding: 12px; 
+            font-size: 18px; 
+            background: #ff6600; 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+            border-radius: 8px; 
+            width: 100%; 
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        button:active { transform: scale(0.98); }
     </style>
 </head>
 <body>
-    <h1>🦊 Found a name?</h1>
-    <p>Enter the secret word to see your next map:</p>
-    
-    <input type="text" id="foxName" placeholder="Type name here...">
-    <button onclick="checkName()">Enter</button>
+
+    <div class="glass-container">
+        <img src="fox-logo.png" alt="Dem Pascale säi Rallye" class="header-image">
+
+        <h1>🦊 E Numm Fonnt?</h1>
+        <p>Gëff de Numm hei an,<br>an du kriss deen nächsten Hiweis:</p>
+        
+        <input type="text" id="foxName" placeholder="hei hin domat...">
+        <button onclick="checkName()">Ok Knäppchen</button>
+    </div>
 
     <script>
         function checkName() {
             var name = document.getElementById("foxName").value.toLowerCase().trim();
             
-            if (name === "redfox") {
-                window.location.href = "test1.png"; // Link to an image in your folder
+            if (name === "eisenerz") {
+                window.location.href = "test1.png"; 
             } else if (name === "silverfox") {
-                window.location.href = "https://goo.gl/maps/xyz123"; // Link to a Google Map
+                window.location.href = "https://goo.gl/maps/xyz123";
             } else {
-                alert("That's not the right name! Keep looking!");
+                alert("Dat war net richteg! Sich weider!");
             }
         }
     </script>
