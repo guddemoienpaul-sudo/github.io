@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="lb">
 <head>
     <title>Fox Hunt Secret Entry</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,14 +12,12 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            /* Hintergrundbild: Ersetze 'background.jpg' durch dein Bild */
             background: url('bg.jpg') no-repeat center center fixed; 
             background-size: cover;
         }
 
-        /* Ein halbtransparenter Kasten, damit man den Text gut lesen kann */
         .glass-container {
-            background: rgba(255, 255, 255, 0.9); /* Weiß mit 90% Deckkraft */
+            background: rgba(255, 255, 255, 0.9);
             padding: 30px;
             border-radius: 20px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
@@ -30,13 +28,13 @@
 
         .header-image {
             width: 100%;
-            max-width: 250px; /* Begrenzt die Größe auf dem Handy */
+            max-width: 250px;
             height: auto;
             border-radius: 10px;
             margin-bottom: 20px;
         }
 
-        h1 { color: #333; font-size: 1.5rem; }
+        h1 { color: #333; font-size: 1.5rem; margin-top: 0; }
         p { color: #666; margin-bottom: 20px; }
 
         input { 
@@ -45,12 +43,33 @@
             border: 2px solid #ddd; 
             border-radius: 8px; 
             width: 100%; 
-            box-sizing: border-box; /* Wichtig, damit Padding das Feld nicht sprengt */
+            box-sizing: border-box; 
             margin-bottom: 15px;
             outline: none;
+            transition: all 0.3s;
         }
 
         input:focus { border-color: #ff6600; }
+
+        /* Styling für den Fehlerzustand des Inputs */
+        input.error {
+            border-color: #d32f2f;
+            background-color: #fff1f1;
+            animation: shake 0.4s;
+        }
+
+        /* Die neue Fehlermeldung im Container */
+        #error-box {
+            display: none;
+            color: #d32f2f;
+            background: #ffcdd2;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            border: 1px solid #d32f2f;
+        }
 
         button { 
             padding: 12px; 
@@ -66,6 +85,15 @@
         }
 
         button:active { transform: scale(0.98); }
+
+        /* Animation für das Wackeln */
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            50% { transform: translateX(8px); }
+            75% { transform: translateX(-8px); }
+            100% { transform: translateX(0); }
+        }
     </style>
 </head>
 <body>
@@ -76,22 +104,45 @@
         <h1>🦊 E Numm Fonnt?</h1>
         <p>Gëff de Numm hei an,<br>an du kriss deen nächsten Hiweis:</p>
         
-        <input type="text" id="foxName" placeholder="hei hin domat...">
+        <div id="error-box">Dat war net richteg! Sich weider!</div>
+        
+        <input type="text" id="foxName" placeholder="hei hin domat..." autocomplete="off">
         <button onclick="checkName()">Ok Knäppchen</button>
     </div>
 
     <script>
         function checkName() {
-            var name = document.getElementById("foxName").value.toLowerCase().trim();
+            var input = document.getElementById("foxName");
+            var errorBox = document.getElementById("error-box");
+            var name = input.value.toLowerCase().trim();
             
+            // Fehlermeldung und rote Farbe bei jedem neuen Klick kurz zurücksetzen
+            errorBox.style.display = "none";
+            input.classList.remove("error");
+
             if (name === "eisenerz") {
                 window.location.href = "test1.png"; 
             } else if (name === "silverfox") {
                 window.location.href = "https://goo.gl/maps/xyz123";
             } else {
-                alert("Dat war net richteg! Sich weider!");
+                // Wenn es falsch ist:
+                errorBox.style.display = "block"; // Nachricht zeigen
+                input.classList.add("error");    // Input rot färben & wackeln
+                
+                // Nach 4 Sekunden wieder schick machen
+                setTimeout(function() {
+                    errorBox.style.display = "none";
+                    input.classList.remove("error");
+                }, 4000);
             }
         }
+
+        // Erlaubt das Abschicken mit der Enter-Taste
+        document.getElementById("foxName").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                checkName();
+            }
+        });
     </script>
 </body>
 </html>
