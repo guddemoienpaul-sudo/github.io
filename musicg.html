@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="lb">
+<head>
+    <title>Hiweiser - Fox Hunt</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0;
+            padding: 20px;
+            background: #f0f2f5; /* Etwas weicher als reines Weiß */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Container für den gesamten Hinweis */
+        .hint-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 100%;
+            overflow: hidden; /* Damit Bilder an den Ecken nicht überstehen */
+            margin-bottom: 30px;
+        }
+
+        .hint-header {
+            background: #ff6600;
+            color: white;
+            padding: 15px;
+            margin: 0;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .hint-content {
+            padding: 20px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Die Bilder passen sich automatisch an */
+        .hint-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .back-button {
+            margin-top: 20px;
+            text-decoration: none;
+            color: #ff6600;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hint-card">
+        <h2 class="hint-header">📍 Hëllef "Klassesch Musek"</h2>
+        
+        <img src="musiq.png" alt="Klassesch Musek" class="hint-image">
+
+        <div class="hint-content">
+            <p>
+
+		Hei sinn D'Titelen vun den Lidder: <br><br>
+
+                A= Freude an die Ode<br>
+		B= Für Elise<br>
+		C= Alla Turca<br>
+		D= Mondscheinsonate<br>
+
+                
+            </p>
+        </div>
+
+    </div>
+    <a href="index.html" class="back-button">⬅ Zréck bei d'Sich</a>
+
+</body>
+</html>
