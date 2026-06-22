@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treasure Hunt - Victory!</title>
+    <style>
+        :root {
+            --bright-bg: linear-gradient(135deg, #00dbde 0%, #fc00ff 100%);
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: var(--bright-bg);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            padding: 20px;
+            position: relative;
+        }
+
+        .win-container {
+            background-color: var(--card-bg);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            z-index: 5; 
+            position: relative;
+        }
+
+        /* Start-Zustand: Inhalt ist versteckt bis zum Klick */
+        .game-content {
+            display: none;
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #ff007f;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            color: #576574;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .food-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 5rem;
+            margin: 25px 0 10px 0;
+        }
+
+        .food-icon {
+            display: inline-block;
+            animation: bounce 2s infinite ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.15); }
+        }
+
+        .photo-container {
+            width: 100%;
+            max-height: 400px;
+            margin: 20px 0;
+            overflow: hidden;
+            border-radius: 14px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border: 3px solid #f8f9fa;
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .reward-box {
+            background: #f8f9fa;
+            border: 2px dashed #00dbde;
+            border-radius: 14px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .reward-code {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ff007f;
+            letter-spacing: 2px;
+        }
+
+        /* Der Aktivierungs-Button */
+        .claim-btn {
+            background: linear-gradient(45deg, #ff007f, #fc00ff);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(255, 0, 127, 0.4);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 20px 0;
+        }
+
+        .claim-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(255, 0, 127, 0.6);
+        }
+
+        /* --- Konfetti liegt ganz VORNE --- */
+        .confetti {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            top: -20px;
+            border-radius: 4px;
+            opacity: 0.85;
+            pointer-events: none;
+            z-index: 100; 
+            display: none; /* Erst nach Klick sichtbar */
+        }
+
+        .confetti.falling {
+            display: block;
+            animation: fall infinite linear;
+        }
+
+        @keyframes fall {
+            0% { top: -20px; transform: translateX(0) rotate(0deg); }
+            100% { top: 105vh; transform: translateX(150px) rotate(1440deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Konfetti-Teilchen -->
+    <div class="confetti" style="left:3%;  background:#ff007f; animation-delay:0s;   animation-duration:3.2s;"></div>
+    <div class="confetti" style="left:12%; background:#00f6ff; animation-delay:1.5s; animation-duration:4.0s;"></div>
+    <div class="confetti" style="left:22%; background:#ffef00; animation-delay:0.4s; animation-duration:3.5s;"></div>
+    <div class="confetti" style="left:32%; background:#00ff66; animation-delay:2.2s; animation-duration:4.5s;"></div>
+    <div class="confetti" style="left:45%; background:#ff6600; animation-delay:0.8s; animation-duration:2.8s;"></div>
+    <div class="confetti" style="left:58%; background:#7000ff; animation-delay:1.1s; animation-duration:3.9s;"></div>
+    <div class="confetti" style="left:70%; background:#ff007f; animation-delay:2.5s; animation-duration:4.2s;"></div>
+    <div class="confetti" style="left:82%; background:#00f6ff; animation-delay:0.2s; animation-duration:3.1s;"></div>
+    <div class="confetti" style="left:93%; background:#ffef00; animation-delay:1.7s; animation-duration:4.7s;"></div>
+
+    <div class="win-container">
+        <!-- Dieser Button zwingt den Browser, den Sound freizugeben -->
+        <button class="claim-btn" id="trigger-btn">🎁 Open Treasure! 🎁</button>
+
+        <!-- Der eigentliche Gewinn-Inhalt (wird nach Klick eingeblendet) -->
+        <div class="game-content" id="victory-content">
+            <h1>GEWONNEN!</h1>
+            <p class="subtitle">Du hues dir <br>däin Iessen verdéngt :)</p>
+            
+            <div class="food-container">
+                <span class="food-icon">🍔</span>
+                <span class="food-icon">🥩</span>
+                <span class="food-icon">🌭</span>
+            </div>
+            
+            <div class="photo-container">
+                <img src="image.jpg" alt="hye">
+            </div>
+            
+            <div class="reward-box">
+                <p style="font-size: 0.9rem; color: #84817a; margin-bottom: 5px; text-transform: uppercase; font-weight: bold;">einfach</p>
+                <p class="reward-code">SUPER</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const triggerBtn = document.getElementById('trigger-btn');
+        const victoryContent = document.getElementById('victory-content');
+        const confettiElements = document.querySelectorAll('.confetti');
+        
+        // Audio sauber per JavaScript initialisieren
+        const winSound = new Audio('victory.mp3');
+
+        triggerBtn.addEventListener('click', () => {
+            // 1. Button verstecken
+            triggerBtn.style.display = 'none';
+            
+            // 2. Gewinn-Inhalt anzeigen
+            victoryContent.style.display = 'block';
+            
+            // 3. Konfetti aktivieren
+            confettiElements.forEach(el => el.classList.add('falling'));
+            
+            // 4. Sound abspielen (wird vom Browser nun zu 100% erlaubt!)
+            winSound.play().catch(err => console.log("Audio-Fehler:", err));
+        });
+    </script>
+
+</body>
+</html>
